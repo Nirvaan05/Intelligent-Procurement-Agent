@@ -1,0 +1,114 @@
+{
+  "vendors": [
+    {
+      "id": "badrock",
+      "name": "BadRock Cements",
+      "category": "cement",
+      "price_per_100_bags_inr": 35000,
+      "currency": "INR",
+      "delivery_days": 5,
+      "in_stock": true,
+      "notes": "Budget option; standard quality"
+    },
+    {
+      "id": "goodrock",
+      "name": "GoodRock Cements",
+      "category": "cement",
+      "price_per_100_bags_inr": 45000,
+      "currency": "INR",
+      "delivery_days": 3,
+      "in_stock": true,
+      "notes": "Premium quality; faster delivery"
+    },
+    {
+      "id": "slowrock",
+      "name": "SlowRock Cements",
+      "category": "cement",
+      "price_per_100_bags_inr": 39000,
+      "currency": "INR",
+      "delivery_days": 7,
+      "in_stock": true,
+      "notes": "Mid-range price; slower delivery"
+    },
+    {
+      "id": "primemix",
+      "name": "PrimeMix Cement Co.",
+      "category": "cement",
+      "price_per_100_bags_inr": 47000,
+      "currency": "INR",
+      "delivery_days": 2,
+      "in_stock": true,
+      "notes": "Premium blend; very fast delivery"
+    },
+    {
+      "id": "ecocem",
+      "name": "EcoCem Builders Cement",
+      "category": "cement",
+      "price_per_100_bags_inr": 46500,
+      "currency": "INR",
+      "delivery_days": 4,
+      "in_stock": true,
+      "notes": "Low-carbon option; consistent setting"
+    },
+    {
+      "id": "rapidset",
+      "name": "RapidSet Cement",
+      "category": "cement",
+      "price_per_100_bags_inr": 52000,
+      "currency": "INR",
+      "delivery_days": 1,
+      "in_stock": true,
+      "notes": "Rush orders; highest cost"
+    },
+    {
+      "id": "durabuild",
+      "name": "DuraBuild Cement",
+      "category": "cement",
+      "price_per_100_bags_inr": 48000,
+      "currency": "INR",
+      "delivery_days": 5,
+      "in_stock": true,
+      "notes": "High strength; good for structural work"
+    },
+    {
+      "id": "valuecrest",
+      "name": "ValueCrest Cements",
+      "category": "cement",
+      "price_per_100_bags_inr": 41000,
+      "currency": "INR",
+      "delivery_days": 6,
+      "in_stock": false,
+      "notes": "Budget-friendly but currently out of stock"
+    },
+    {
+      "id": "monsoonmart",
+      "name": "MonsoonMart Cement Supply",
+      "category": "cement",
+      "price_per_100_bags_inr": 44500,
+      "currency": "INR",
+      "delivery_days": 9,
+      "in_stock": false,
+      "notes": "Seasonal supplier; long lead times"
+    },
+    {
+      "id": "siteprime",
+      "name": "SitePrime Cement",
+      "category": "cement",
+      "price_per_100_bags_inr": 49500,
+      "currency": "INR",
+      "delivery_days": 3,
+      "in_stock": true,
+      "notes": "Trusted contractor brand; stable supply"
+    },
+    {
+      "id": "ultrarock",
+      "name": "UltraRock Cementworks",
+      "category": "cement",
+      "price_per_100_bags_inr": 56000,
+      "currency": "INR",
+      "delivery_days": 2,
+      "in_stock": true,
+      "notes": "Top-tier; priced for critical projects"
+    }
+  ]
+}

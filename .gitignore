@@ -1,0 +1,34 @@
+# ── Secrets ────────────────────────────────────────────────
+.env
+procurement_agent/.env
+
+# ── Python ─────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# ── Testing ────────────────────────────────────────────────
+.pytest_cache/
+htmlcov/
+.coverage
+
+# ── Runtime data (regenerated on each run) ─────────────────
+procurement_agent/memory_store.json
+procurement_agent/audit_log.jsonl
+
+# ── ADK session state ─────────────────────────────────────
+.adk/
+procurement_agent/.adk/
+
+# ── IDE / OS ───────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+Thumbs.db
+.DS_Store
