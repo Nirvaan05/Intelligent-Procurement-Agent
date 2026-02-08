@@ -22,7 +22,6 @@ Offline modes (no LLM):
 import sys
 
 from google.adk.agents import Agent
-from google.adk.models.lite_llm import LiteLlm
 
 try:
     from .tools import (
@@ -39,11 +38,8 @@ except ImportError:
 # Configuration
 # ---------------------------------------------------------------------------
 
-# Using OpenRouter free model via LiteLLM.
-# Requires OPENROUTER_API_KEY in .env.
-# To switch back to Google Gemini, replace MODEL with a plain string:
-#   MODEL: str = "gemini-2.0-flash"
-MODEL = LiteLlm(model="openrouter/openai/gpt-oss-120b:free")
+
+MODEL = gemini-2.0-flash
 
 SYSTEM_PROMPT: str = """\
 You are a procurement agent for construction sites. Your job:
