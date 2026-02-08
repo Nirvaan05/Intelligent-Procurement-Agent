@@ -3,7 +3,7 @@
 An AI-powered procurement assistant for construction sites, built with the
 **Google Agent Development Kit (ADK)** and **Gemini 2.0 Flash**. It stores
 site-specific rules, compares vendor catalogs, enforces budget gates, and
-routes over-budget orders through human approval — all with a full audit trail.
+routes over-budget orders through human approval  all with a full audit trail.
 
 ---
 
@@ -29,7 +29,7 @@ routes over-budget orders through human approval — all with a full audit trail
                             ▼
  ┌────────────────────────────────────────────────────────────────┐
  │              Tool Layer  (tools.py)                            │
- │  Pure business logic — no file I/O, no LLM calls               │
+ │  Pure business logic  no file I/O, no LLM calls               │
  │                                                                │
  │  ┌─────────────────┐   ┌─────────────────┐  ┌───────────────┐  │
  │  │ store_site_rules │  │ fetch_vendors   │  │ place_order   │  │
@@ -41,7 +41,7 @@ routes over-budget orders through human approval — all with a full audit trail
              ▼                     ▼                    ▼
  ┌────────────────────────────────────────────────────────────────┐
  │              Memory Layer  (memory.py)                         │
- │  Persistence — all file I/O lives here                         │
+ │  Persistence  all file I/O lives here                         │
  │                                                                │
  │  ┌────────────────┐  ┌─────────────────┐  ┌────────────────┐   │
  │  │ memory_store   │  │ mock_vendors    │  │ audit_log      │   │
@@ -83,23 +83,23 @@ User: "Order 100 bags of cement for Mumbai-Site-1"
 
 | Aspect | Tool-based | Prompt-only |
 |--------|-----------|-------------|
-| **Determinism** | Tools produce identical output for identical input — testable, auditable | LLM may hallucinate prices, invent vendors, or vary formatting |
+| **Determinism** | Tools produce identical output for identical input  testable, auditable | LLM may hallucinate prices, invent vendors, or vary formatting |
 | **Separation of concerns** | Business logic in Python; reasoning in the LLM | Logic and data mixed into prompt text |
 | **Testability** | Unit-test each tool with `pytest`; mock file I/O | No clean way to test "what the LLM would say" |
 | **Auditability** | Every decision is logged to `audit_log.jsonl` | LLM reasoning is ephemeral unless logged manually |
-| **Security** | Budget gates enforced in code — the LLM cannot bypass `place_order` | LLM could be prompt-injected to skip checks |
+| **Security** | Budget gates enforced in code  the LLM cannot bypass `place_order` | LLM could be prompt-injected to skip checks |
 
 ### Why Structured + Semantic Memory?
 
 The agent combines two memory patterns:
 
-1. **Structured memory** (`memory_store.json`) — Stores site rules and orders
+1. **Structured memory** (`memory_store.json`)  Stores site rules and orders
    as strongly-typed JSON objects. This enables:
    - Exact retrieval by site name (no fuzzy search needed).
    - Deterministic budget comparisons against `approval_limit`.
    - Reliable blacklist enforcement (set membership, not similarity).
 
-2. **Semantic memory** (LLM context) — The system prompt gives the LLM
+2. **Semantic memory** (LLM context)  The system prompt gives the LLM
    domain knowledge (procurement workflows, approval flows) so it can:
    - Extract intent from natural language ("cheapest vendor" → sort by price).
    - Handle multi-turn approval conversations.
@@ -110,9 +110,9 @@ provides flexibility and natural-language understanding.
 
 ### Why JSONL for Audit Logs?
 
-- **Append-only** — Each tool call appends one line; no read-modify-write race.
-- **Streamable** — Each line is self-contained JSON; partial reads are valid.
-- **Human-readable** — Easy to `grep`, `jq`, or inspect in any text editor.
+- **Append-only**  Each tool call appends one line; no read-modify-write race.
+- **Streamable**  Each line is self-contained JSON; partial reads are valid.
+- **Human-readable**  Easy to `grep`, `jq`, or inspect in any text editor.
 
 ---
 
@@ -130,7 +130,7 @@ The agent separates information into two distinct lifetimes:
 │  │  • Current conversation history (user + agent turns)    │ │
 │  │  • Intermediate tool results (vendor lists, filter      │ │
 │  │    output) the LLM references within the same session   │ │
-│  │  • Approval state — which vendor is awaiting yes/no     │ │
+│  │  • Approval state  which vendor is awaiting yes/no     │ │
 │  └─────────────────────────────────────────────────────────┘ │
 │  Lifetime: single session · Lost on restart                  │
 └──────────────────────────────────────────────────────────────┘
@@ -157,11 +157,11 @@ The agent separates information into two distinct lifetimes:
 
 | Step | Short-term context | Long-term memory |
 |------|-------------------|-----------------|
-| User says "Order cement for Delhi-Site-7" | LLM parses intent → extracts site name, material | — |
+| User says "Order cement for Delhi-Site-7" | LLM parses intent → extracts site name, material |  |
 | `retrieve_site_rules("Delhi-Site-7")` | LLM receives rules dict in session | Reads `memory_store.json` |
 | `fetch_vendors("cement")` | LLM receives vendor list in session | Reads `mock_vendors.json` |
 | `filter_vendors(...)` | LLM holds filtered result for follow-up turns | Logs rejections to `audit_log.jsonl` |
-| `place_order(...)` → APPROVAL_REQUIRED | LLM remembers which vendor needs approval | — |
+| `place_order(...)` → APPROVAL_REQUIRED | LLM remembers which vendor needs approval |  |
 | User says "yes" → `confirm_order(...)` | Session ends | Order saved to `memory_store.json`; logged to `audit_log.jsonl` |
 
 **Key design choice:** The LLM never reads `memory_store.json` or `audit_log.jsonl`
@@ -173,7 +173,7 @@ every read and write is validated, logged, and testable.
 ## Vendor Filtering: Reasoning Chain
 
 The `filter_vendors` function implements a strict, deterministic three-stage
-pipeline. Every vendor passes through each gate in order — no gate can be
+pipeline. Every vendor passes through each gate in order  no gate can be
 skipped, and the LLM cannot override the logic.
 
 ```
@@ -236,7 +236,7 @@ skipped, and the LLM cannot override the logic.
 |-----------|-------------|--------|
 | Yes | Any | Pick cheapest eligible → `place_order` → auto-approved |
 | No | Yes | Pick cheapest over-budget → `place_order` → APPROVAL_REQUIRED |
-| No | No (all blacklisted) | Return message: "All vendors blacklisted" — no order placed |
+| No | No (all blacklisted) | Return message: "All vendors blacklisted"  no order placed |
 
 **Example trace** (Delhi-Site-7: limit ₹38,000, blacklist BadRock):
 
@@ -257,11 +257,11 @@ Input:  11 vendors from catalog
   └─ Decision: All non-blacklisted vendors exceed budget.
      Cheapest over-budget: SlowRock at ₹39,000.
      → place_order triggers APPROVAL_REQUIRED
-     → Overage: ₹1,000 (2.6%) — awaiting human approval.
+     → Overage: ₹1,000 (2.6%)  awaiting human approval.
 ```
 
 Every rejection at each gate is logged to `audit_log.jsonl` with the vendor
-name, price, and reason — providing a complete, auditable paper trail of why
+name, price, and reason  providing a complete, auditable paper trail of why
 each vendor was accepted or rejected.
 
 ---
@@ -313,7 +313,7 @@ Return all vendors supplying a given material from the catalog.
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `material` | `str` | Material category (e.g. `"cement"`) — case-insensitive |
+| `material` | `str` | Material category (e.g. `"cement"`)  case-insensitive |
 
 **Returns:** List of vendor dicts, or `[]` if no match.
 
@@ -336,7 +336,7 @@ Filter vendors by blacklist and budget, sort eligible by price.
 | `vendors` | `list[dict]` | Vendor list from `fetch_vendors` |
 | `blacklist` | `list[str]` | Names to exclude |
 | `budget` | `int` | Max price per 100 bags (INR) |
-| `site_name` | `str` | Optional — for audit log entries |
+| `site_name` | `str` | Optional  for audit log entries |
 
 **Returns:**
 
@@ -494,13 +494,13 @@ cp procurement_agent/.env.example procurement_agent/.env
 ```
 procurement_agent/
 ├── __init__.py          # Package init; ADK entry point
-├── .env                 # API key config (git-ignored — see .env.example)
+├── .env                 # API key config (git-ignored  see .env.example)
 ├── .env.example         # Template showing required env vars
 │
 │  ── Layered Architecture ─────────────────────────────
-├── agent.py             # AGENT LAYER — ADK Agent definition only
-├── tools.py             # TOOL LAYER  — pure business logic (no I/O)
-├── memory.py            # MEMORY LAYER — all file I/O & persistence
+├── agent.py             # AGENT LAYER  ADK Agent definition only
+├── tools.py             # TOOL LAYER   pure business logic (no I/O)
+├── memory.py            # MEMORY LAYER  all file I/O & persistence
 │
 │  ── Offline / Testing ─────────────────────────────────
 ├── demo.py              # Offline demo + edge-case test harness
@@ -521,7 +521,7 @@ procurement_agent/
 ### Import Dependency Graph
 
 ```
-memory.py          ← (no project imports — leaf module)
+memory.py          ← (no project imports  leaf module)
     ↑
 tools.py           ← imports memory
     ↑
@@ -553,7 +553,7 @@ Tools never use hardcoded vendor data. Current catalog (sorted by price):
 | UltraRock Cementworks | ₹56,000 | 2 days | Yes | Top-tier; priced for critical projects |
 
 > **Note:** To add or modify vendors, edit `mock_vendors.json` directly. All
-> tools read from this file at runtime — no code changes required.
+> tools read from this file at runtime  no code changes required.
 
 ---
 
