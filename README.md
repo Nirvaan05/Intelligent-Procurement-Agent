@@ -74,6 +74,13 @@ User: "Order 100 bags of cement for Mumbai-Site-1"
         └─► place_order(cheapest_eligible, price, 100, ...)
               └─► ORDER_CONFIRMED or APPROVAL_REQUIRED
 ```
+Example :
+<img width="1881" height="711" alt="image" src="https://github.com/user-attachments/assets/94e17a98-328a-42c3-b1eb-ac6f62acf65c" />
+<img width="1877" height="709" alt="image" src="https://github.com/user-attachments/assets/ae42ea3a-3553-480b-bb0b-12dd07c68c74" />
+<img width="1869" height="644" alt="image" src="https://github.com/user-attachments/assets/a70135b0-1d1d-4cdb-9d2e-2bd870389b59" />
+<img width="1884" height="717" alt="image" src="https://github.com/user-attachments/assets/ef4e0814-5a5d-4b54-92c9-258b0d70812d" />
+
+
 
 ---
 
